@@ -9,7 +9,7 @@ def start():
     if not BIN.exists() or hashlib.sha256(BIN.read_bytes()).hexdigest() != SHA:
         urllib.request.urlretrieve(URL, BIN); BIN.chmod(0o755)
     KEY.write_text(st.secrets["OF_KEY"])
-    cmd = [str(BIN),"--role=exit","--mode=l4","--transport=cupsonline",
+    cmd = [str(BIN),"--role=exit","--mode=l4","--transport=telemost",
            "--encryption-key-file",str(KEY)]
     doc = st.secrets.get("OF_DOC","")
     if doc: cmd += ["--url", doc]
