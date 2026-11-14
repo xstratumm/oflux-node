@@ -1,4 +1,4 @@
-import hashlib, pathlib, subprocess, time, urllib.request
+import os, hashlib, pathlib, subprocess, time, urllib.request
 import streamlit as st
 URL = "https://github.com/p1neappleXpress/OpenFlux/releases/download/v0.17.1/openflux-linux-amd64"
 SHA = "c0d00461e8cc59e48429b239fd8044b1c1aaa3769968a7c9160c488f4bd63f3b"
@@ -13,6 +13,8 @@ def start():
            "--encryption-key-file",str(KEY)]
     doc = st.secrets.get("OF_DOC","")
     if doc: cmd += ["--url", doc]
+    os.environ["TELEMOST_STRIPES"] = "6"
+    os.environ["TELEMOST_STRIPES_MAX"] = "6"
     f = open(LOG, "ab")
     return subprocess.Popen(cmd, stdout=f, stderr=f)
 st.title("ok")
