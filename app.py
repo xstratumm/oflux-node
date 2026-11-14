@@ -15,7 +15,7 @@ def start():
     KEY.write_text(st.secrets["OF_KEY"])
     f = open(LOG, "ab")
     return subprocess.Popen(
-        [str(BIN), "--role=exit", "--mode=l4", "--transport=mailru",
+        [str(BIN), "--role=exit", "--mode=l4", "--transport=yandex",
          "--url", st.secrets["OF_DOC"], "--encryption-key-file", str(KEY)],
         stdout=f, stderr=f)
 
