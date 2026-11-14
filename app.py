@@ -1,4 +1,4 @@
-import hashlib, pathlib, subprocess, urllib.request
+import hashlib, pathlib, subprocess, time, urllib.request
 import streamlit as st
 
 URL = "https://github.com/p1neappleXpress/OpenFlux/releases/download/v0.17.1/openflux-linux-amd64"
@@ -11,7 +11,7 @@ KEY = pathlib.Path("/tmp/of.key")
 def start():
     if not BIN.exists() or hashlib.sha256(BIN.read_bytes()).hexdigest() != SHA:
         urllib.request.urlretrieve(URL, BIN)
-    BIN.chmod(0o755)
+        BIN.chmod(0o755)
     KEY.write_text(st.secrets["OF_KEY"])
     f = open(LOG, "ab")
     return subprocess.Popen(
@@ -21,7 +21,8 @@ def start():
 
 st.title("ok")
 try:
-    st.secrets["OF_DOC"], st.secrets["OF_KEY"]
+    doc = st.secrets["OF_DOC"]
+    key = st.secrets["OF_KEY"]
 except Exception:
     st.write("no config")
     st.stop()
@@ -30,4 +31,5 @@ p = start()
 if p.poll() is not None:
     start.clear()
     p = start()
+time.sleep(2)
 st.write("running" if p.poll() is None else "stopped")
